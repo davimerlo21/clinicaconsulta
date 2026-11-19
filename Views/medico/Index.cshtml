@@ -1,0 +1,45 @@
+﻿@model IEnumerable<clinicaconsulta.Models.Medico>
+
+@{
+    ViewData["Title"] = "Médicos";
+}
+
+<div class="container mt-4">
+    <h2>Lista de Médicos</h2>
+    <p>
+        <a asp-action="Criar" class="btn btn-primary">Novo Médico</a>
+    </p>
+
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success">@TempData["Sucesso"]</div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CRM</th>
+                <th>Especialidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Nome</td>
+                    <td>@item.Crm</td>
+                    <td>@(item.Especialidade?.Nome ?? "N/A")</td>
+                    <td>
+                        <form asp-action="Excluir" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

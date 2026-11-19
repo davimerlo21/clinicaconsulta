@@ -1,0 +1,49 @@
+﻿@model IEnumerable<clinicaconsulta.Models.Consulta>
+
+@{
+    ViewData["Title"] = "Consultas";
+}
+
+<div class="container mt-4">
+    <h2>Lista de Consultas Agendadas</h2>
+    <p>
+        <a asp-action="Criar" class="btn btn-primary">Nova Consulta</a>
+    </p>
+
+    @if (TempData["Sucesso"] != null)
+    {
+        <div class="alert alert-success">@TempData["Sucesso"]</div>
+    }
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Erro"]</div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Data e Hora</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@(item.Paciente?.Nome ?? "N/A")</td>
+                    <td>@(item.Medico?.Nome ?? "N/A")</td>
+                    <td>@item.DataHora.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <form asp-action="Cancelar" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja cancelar esta consulta?');">Cancelar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

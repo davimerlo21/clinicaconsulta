@@ -1,0 +1,41 @@
+﻿@model clinicaconsulta.Models.Consulta
+
+@{
+    ViewData["Title"] = "Agendar Consulta";
+}
+
+<div class="container mt-4">
+    <h2>Agendar Nova Consulta</h2>
+    <hr />
+
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Erro"]</div>
+    }
+
+    <form asp-action="Criar" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="PacienteId" class="control-label">Paciente</label>
+            <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.Pacientes">
+                <option value="">Selecione um paciente</option>
+            </select>
+            <span asp-validation-for="PacienteId" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="MedicoId" class="control-label">Médico</label>
+            <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.Medicos">
+                <option value="">Selecione um médico</option>
+            </select>
+            <span asp-validation-for="MedicoId" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="DataHora" class="control-label">Data e Hora</label>
+            <input asp-for="DataHora" class="form-control" type="datetime-local" />
+            <span asp-validation-for="DataHora" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Agendar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </div>
+    </form>
+</div>
